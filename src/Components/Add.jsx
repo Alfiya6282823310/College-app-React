@@ -1,40 +1,52 @@
 import React, { useState } from 'react'
 import Navbar from '../Navbar'
+import axios from 'axios'
 
 const Add = () => {
-    const[data,changeData]=useState(
+    const [data, changeData] = useState(
         {
-            "fname":"",
-            "lname":"",
-            "college":"",
-            "dob":"",
-            "course":"",
-            "mobile":"",
-            "email":"",
-            "address":""
-            
+            "firstname": "",
+            "lastname": "",
+            "college": "",
+            "dob": "",
+            "course": "",
+            "mobile": "",
+            "email": "",
+            "address": ""
+
         }
     )
-    const inputHandler=(event)=>{
-        changeData({...data,[event.target.name]:event.target.value})
+    const inputHandler = (event) => {
+        changeData({ ...data, [event.target.name]: event.target.value })
     }
-    const readValue=()=>{
+    const readValue = () => {
         console.log(data)
+        axios.post("https://courseapplogix.onrender.com/addstudents", data).then(
+            (response) => {
+                console.log(response.data)
+                if (response.data.status ==  "success")
+        {
+            alert("success")
+        } else {
+            alert("error")
+        }
     }
-  return (
+        ).catch ().finally()
+    }
+return (
     <div>
-        <Navbar/>
+        <Navbar />
         <div className="container">
             <div className="row">
                 <div className="col col-12 col-sm-12 col-md-12 col-xl-12 col-xxl-12">
                     <div className="row g-3">
                         <div className="col col-12 col-sm-6 col-md-6 col-xl-6 col-xxl-6">
                             <label htmlFor="" className="form-label">first Name</label>
-                            <input type="text" className="form-control" name='fname' value={data.fname} onChange={inputHandler}/>
+                            <input type="text" className="form-control" name='firstname' value={data.firstname} onChange={inputHandler} />
                         </div>
                         <div className="col col-12 col-sm-6 col-md-6 col-xl-6 col-xxl-6">
                             <label htmlFor="" className="form-label">Last Name</label>
-                            <input type="text" className="form-control" name='lname' value={data.lname} onChange={inputHandler} />
+                            <input type="text" className="form-control" name='lastname' value={data.lastname} onChange={inputHandler} />
                         </div>
                         <div className="col col-12 col-sm-6 col-md-6 col-xl-6 col-xxl-6">
                             <label htmlFor="" className="form-label">College Name</label>
@@ -42,11 +54,12 @@ const Add = () => {
                         </div>
                         <div className="col col-12 col-sm-6 col-md-6 col-xl-6 col-xxl-6">
                             <label htmlFor="" className="form-label">Date of birth</label>
-                            <input type="date" className="form-control" name='dob' value={data.dob} onChange={inputHandler}/>
+                            <input type="date" className="form-control" name='dob' value={data.dob} onChange={inputHandler} />
                         </div>
                         <div className="col col-12 col-sm-6 col-md-6 col-xl-6 col-xxl-6">
                             <label htmlFor="" className="form-label">Course</label>
                             <select name="course" id="" className="form-control" value={data.course} onChange={inputHandler}>
+                                <option className="option">select Option</option>
                                 <option className="option">MCA</option>
                                 <option className="option">MBA</option>
                                 <option className="option">BTEC</option>
@@ -73,7 +86,7 @@ const Add = () => {
             </div>
         </div>
     </div>
-  )
+)
 }
 
 export default Add
